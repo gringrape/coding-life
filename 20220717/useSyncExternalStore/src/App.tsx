@@ -1,42 +1,26 @@
-import { useSyncExternalStore } from 'react';
+import { ChangeEvent } from 'react';
 
-const store = {
-  state: { count: 0 },
-  listeners: new Set(),
-  getSnapshot() {
-    return this.state;
-  },
-  subcribe(callback: any) {
-    this.listeners.add(callback);
-    return () => this.listeners.delete(callback);
-  },
-  setState(reducer) {
-    this.state = {
-      ...this.state,
-      ...reducer(this.state),
-    };
-    this.listeners.forEach((f) => f());
-  },
-};
+import useUserStore from './useUserStore';
 
 export default function App() {
-  const { count } = useSyncExternalStore(
-    store.subcribe.bind(store),
-    store.getSnapshot.bind(store),
-  );
+  const { name, changeName } = useUserStore();
 
-  const handleClick = () => {
-    store.setState((state) => ({
-      ...state,
-      count: count + 1,
-    }));
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    changeName(value);
   };
 
   return (
     <>
-      <h1>hello, world</h1>
-      <p>{count}</p>
-      <button type="button" onClick={handleClick}>+</button>
+      <h1>사용자 이름 변경</h1>
+      <div>
+        <input
+          type="text"
+          value={name}
+          onChange={handleChange}
+        />
+      </div>
+      <p>{name}</p>
     </>
   );
 }
