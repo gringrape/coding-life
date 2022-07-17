@@ -1,11 +1,13 @@
 import { Action, Store } from './core';
 
+import NameField from './models/NameField';
+
 @Store()
 export default class UserStore {
-  name: string = '';
+  name = new NameField();
 
   @Action()
   changeName(name: string) {
-    this.name = name;
+    this.name = this.name.update(name);
   }
 }
