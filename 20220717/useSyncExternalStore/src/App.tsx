@@ -3,11 +3,11 @@ import { ChangeEvent } from 'react';
 import useUserStore from './useUserStore';
 
 export default function App() {
-  const { name, changeName } = useUserStore();
+  const userStore = useUserStore();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    changeName(value);
+    userStore.changeName(value);
   };
 
   return (
@@ -16,11 +16,11 @@ export default function App() {
       <div>
         <input
           type="text"
-          value={name}
+          value={userStore.name}
           onChange={handleChange}
         />
       </div>
-      <p>{name}</p>
+      <p>{userStore.name}</p>
     </>
   );
 }
