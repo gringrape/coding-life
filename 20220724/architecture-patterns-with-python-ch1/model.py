@@ -1,4 +1,13 @@
-from .order_line import OrderLine
+from dataclasses import dataclass
+
+from exceptions import OutOfStock
+
+
+@dataclass(frozen=True)
+class OrderLine:
+    order_id: str
+    sku: str
+    quantity: int
 
 
 class Batch:
@@ -8,6 +17,13 @@ class Batch:
         self.eta = eta
         self._purchased_quantity = quantity
         self._allocations = set()
+
+    def __gt__(self, other):
+        if self.eta == None:
+            return False
+        if other.eta == None:
+            return True
+        return self.eta > other.eta
 
     def allocate(self, line: OrderLine):
         if self.can_allocate(line):
@@ -26,3 +42,13 @@ class Batch:
         return self._purchased_quantity - sum(
             line.quantity for line in self._allocations
         )
+
+
+def allocate(orderline: OrderLine, batches: [Batch]):
+    try:
+        batch = next(b for b in sorted(batches) if b.can_allocate(orderline))
+
+    except StopIteration:
+        raise OutOfStock(f"Out of stock for sku {orderline.sku}")
+
+    batch.allocate(orderline)

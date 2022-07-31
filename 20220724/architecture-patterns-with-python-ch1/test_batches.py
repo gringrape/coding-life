@@ -2,8 +2,7 @@ from datetime import date
 
 from dataclasses import dataclass
 
-from domain.batch import Batch
-from domain.order_line import OrderLine
+from model import Batch, OrderLine
 
 
 def make_batch_and_line(sku, line_quantity, batch_quantity):
