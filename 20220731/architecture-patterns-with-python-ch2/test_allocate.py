@@ -23,13 +23,13 @@ def later():
 
 def test_prefers_current_stock_batches_to_shipments():
     in_stock_batch = Batch(
-        id="in-stock-batch",
+        reference="in-stock-batch",
         sku="RETRO-CLOCK",
         quantity=100,
         eta=None,
     )
     shipment_batch = Batch(
-        id="shipment-batch",
+        reference="shipment-batch",
         sku="RETRO-CLOCK",
         quantity=100,
         eta=tomorrow(),
@@ -44,9 +44,9 @@ def test_prefers_current_stock_batches_to_shipments():
 
 
 def test_prefers_earlier_batch():
-    earliest = Batch(id="batch1", sku="SPOON", quantity=100, eta=today())
-    medium = Batch(id="batch2", sku="SPOON", quantity=100, eta=tomorrow())
-    latest = Batch(id="batch3", sku="SPOON", quantity=100, eta=later())
+    earliest = Batch(reference="batch1", sku="SPOON", quantity=100, eta=today())
+    medium = Batch(reference="batch2", sku="SPOON", quantity=100, eta=tomorrow())
+    latest = Batch(reference="batch3", sku="SPOON", quantity=100, eta=later())
 
     line = OrderLine(order_id="order1", sku="SPOON", quantity=10)
 
@@ -58,7 +58,7 @@ def test_prefers_earlier_batch():
 
 
 def test_raises_out_of_stock_exception_if_cannot_allocate():
-    batch = Batch(id="batch-1", sku="PORK", quantity=10, eta=tomorrow())
+    batch = Batch(reference="batch-1", sku="PORK", quantity=10, eta=tomorrow())
     orderline = OrderLine(order_id="order-1", sku="PORK", quantity=10)
 
     allocate(orderline=orderline, batches=[batch])

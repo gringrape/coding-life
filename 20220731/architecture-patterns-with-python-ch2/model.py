@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from exceptions import OutOfStock
 
 
-@dataclass(frozen=True)
+@dataclass(unsafe_hash=True)
 class OrderLine:
     order_id: str
     sku: str
@@ -11,8 +11,8 @@ class OrderLine:
 
 
 class Batch:
-    def __init__(self, id, sku, quantity, eta):
-        self.id = id
+    def __init__(self, reference, sku, quantity, eta):
+        self.reference = reference
         self.sku = sku
         self.eta = eta
         self._purchased_quantity = quantity

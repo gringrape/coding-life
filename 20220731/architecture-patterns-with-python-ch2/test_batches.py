@@ -7,7 +7,9 @@ from model import Batch, OrderLine
 
 def make_batch_and_line(sku, line_quantity, batch_quantity):
     return (
-        Batch(id="batch-001", sku=sku, quantity=batch_quantity, eta=date.today()),
+        Batch(
+            reference="batch-001", sku=sku, quantity=batch_quantity, eta=date.today()
+        ),
         OrderLine(order_id="order-123", sku=sku, quantity=line_quantity),
     )
 
@@ -58,7 +60,7 @@ def test_cannnot_allocate_if_available_smaller_than_required():
 
 
 def test_cannot_allocate_if_skus_do_not_match():
-    batch = Batch(id="batch-001", sku="TOASTER", quantity=20, eta=date.today())
+    batch = Batch(reference="batch-001", sku="TOASTER", quantity=20, eta=date.today())
     line = OrderLine(order_id="order-123", sku="EXPENSIVE-TOASTER", quantity=2)
 
     assert batch.can_allocate(line) is False
