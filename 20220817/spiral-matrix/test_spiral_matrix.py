@@ -8,6 +8,11 @@ class SpiralMatrix:
         self.y = 0
         self.direction = [1, 0]
 
+    def next_point(self):
+        dx, dy = self.direction
+
+        return (self.x + dx, self.y + dy)
+
     def is_out_of_bound(self, x, y):
         size = self.size
         return x < 0 or x >= size or y < 0 or y >= size
@@ -15,11 +20,8 @@ class SpiralMatrix:
     def is_already_filled(self, x, y):
         return self.matrix[y][x] != self.EMPTY
 
-    def is_blocked(self):
-        dx, dy = self.direction
-
-        x = self.x + dx
-        y = self.y + dy
+    def is_front_blocked(self):
+        (x, y) = self.next_point()
 
         return self.is_out_of_bound(x, y) or self.is_already_filled(x, y)
 
@@ -27,17 +29,23 @@ class SpiralMatrix:
         dx, dy = self.direction
         self.direction = [-dy, dx]
 
-    def go(self):
-        if self.is_blocked():
-            self.turn()
-
+    def advance(self):
         dx, dy = self.direction
         self.x += dx
         self.y += dy
 
+    def put(self, number):
+        self.matrix[self.y][self.x] = number
+
+    def go(self):
+        if self.is_front_blocked():
+            self.turn()
+
+        self.advance()
+
     def generate(self):
         for i in range(self.size ** 2):
-            self.matrix[self.y][self.x] = i
+            self.put(i)
             self.go()
 
         return self.matrix
