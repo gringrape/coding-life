@@ -155,3 +155,13 @@ gradle-app.setting
 .project
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
+
+
+# sbt project
+.bsp
+.metals
+project
+target
+
+# vscode
+.vscode
