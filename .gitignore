@@ -160,8 +160,11 @@ gradle-app.setting
 # sbt project
 .bsp
 .metals
+.bloop
 project
 target
+.scalafmt.conf
+
 
 # vscode
 .vscode
