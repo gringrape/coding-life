@@ -1,0 +1,14 @@
+{
+  "name": "subcurrency-example",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "truffle test",
+    "test:watch": "nodemon --exec 'npm test' --watch contracts --watch test -e js,sol"
+  },
+  "devDependencies": {
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.19"
+  }
+}
