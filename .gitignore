@@ -165,6 +165,11 @@ project
 target
 .scalafmt.conf
 
+# IntelliJ
+.idea
+
+# gradle
+.gradle
 
 # vscode
 .vscode
