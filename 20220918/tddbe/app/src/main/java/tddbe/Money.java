@@ -1,6 +1,6 @@
 package tddbe;
 
-public class Money extends Expression {
+public class Money implements Expression {
     protected int amount;
     protected String currency;
 
@@ -29,7 +29,7 @@ public class Money extends Expression {
         return amount + " " + currency;
     }
 
-    public Money times(int multiplier) {
+    public Expression times(int multiplier) {
         return new Money(this.amount * multiplier, currency);
     }
 
@@ -37,7 +37,13 @@ public class Money extends Expression {
         return currency;
     }
 
-    public Money plus(Money addend) {
-        return new Money(amount + addend.amount, currency);
+    public Expression plus(Expression addend) {
+        return new Sum(this, addend);
+    }
+
+    @Override
+    public Money reduce(Bank bank, String to) {
+        int rate = bank.rate(currency, to);
+        return new Money(amount / rate, to);
     }
 }
