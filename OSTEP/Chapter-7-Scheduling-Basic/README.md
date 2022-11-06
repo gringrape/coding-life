@@ -58,3 +58,33 @@ python scheduler.py -p RR -l 100,200,300 -q 1 -c
 
 해석 결과 
 ![](https://user-images.githubusercontent.com/53764714/200163872-8af1800d-8f15-4e65-8695-0483ec4ab5a1.png)
+
+## 4번 문제
+어떤 종류의 `workload`에서 `SJF`와 `FIFO`의 `turnaround time`이 같아지는가?
+
+### 풀이
+가장 짧은 작업이 가장 먼저 오게 되는 경우에 두 정책은 같아진다.
+즉, Job들의 길이가 오름차순일때, turnaround time이 같아진다.
+
+## 5번 문제
+어떤 종류의 `workload`와 `quantum length`에서 `SJF`와 `RR`은 같아지는가?
+
+### 풀이
+전체 Job의 개수를 N이라고 하고, 길이 순으로 보았을때,
+N-1번째 Job의 길이보다 `quantum length`가 같거나 커야 한다. 
+`context switching`이 일어나지 않아야 하기 때문이다.
+
+## 6번 문제
+SJF에서 Job의 길이가 증가할때, `response time`은 어떻게 되는가?
+simulator를 사용해 경향을 파악해볼 수 있는가?
+
+### 풀이 
+linear 하게 증가 할 것이다.
+Simulator를 다음과 같이 실행해보자.
+```bash
+python scheduler.py -p SJF -l 100,200,300 -c
+python scheduler.py -p SJF -l 200,300,400 -c
+python scheduler.py -p SJF -l 300,400,500 -c
+
+```
+133, 233, 333 으로 100씩 증가한다.
