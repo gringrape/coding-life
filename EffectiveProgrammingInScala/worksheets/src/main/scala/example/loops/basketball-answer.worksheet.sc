@@ -1,6 +1,7 @@
 import scala.math.abs
 import scala.math.sqrt
 import scala.math.pow
+import scala.math.Pi
 
 case class Position(x: Double, y: Double):
   val coordinates = (x, y)
@@ -29,7 +30,8 @@ object Position:
   val player = Position(0, 1.80)
   val hoop   = Position(6.75, 3.048)
 
-case class Angle(radians: Double)
+case class Angle(degrees: Double):
+  val radians = degrees * Pi / 180
 case class Speed(metersPerSecond: Double)
 
 def isWinningShot(angle: Angle, speed: Speed): Boolean =
@@ -59,7 +61,7 @@ def isWinningShot(angle: Angle, speed: Speed): Boolean =
   loop(time = 0)
 end isWinningShot
 
-val angle = Angle(1.4862)
-val speed = Speed(20)
+val angle = Angle(48)
+val speed = Speed(7.92)
 
 isWinningShot(angle, speed)
