@@ -88,3 +88,16 @@ python scheduler.py -p SJF -l 300,400,500 -c
 
 ```
 133, 233, 333 으로 100씩 증가한다.
+
+## 7번 문제
+`Round Robin` 정책을 사용하는 경우, `quantum length`가 증가 할때,
+`response time`은 어떻게 되는가? Job의 개수가 N개라고 할때, 최악의
+`response time`에 대한 등식을 세울수 있는가?
+
+### 풀이
+`quantum length`가 증가하는 경우에 `response time`은 증가한다. `context switching`이 덜 일어나기 때문이다. 최악의 경우란 `context switching`이 전혀 일어나지 않고 하나의 slice당 한개의 Job이 처리되는 것이다.
+
+따라서, 평균을 계산하면 다음과 같다. 
+```
+response-time = average(1 to n) * quantum-length
+```
