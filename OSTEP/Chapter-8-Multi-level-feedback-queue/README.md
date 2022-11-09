@@ -141,8 +141,11 @@ python mlfq.py \
 
 ## 문제 6. 
 
+`I flag`는 I/O가 끝난 Job을 Queue(대기열)의 가장 앞쪽 혹은 가장 뒷쪽에 할당할지를 결정한다. 
+
 `I flag`가 있을때, Queue의 앞에 I/O가 끝난 Job을 다시 할당하므로 우선순위가 바뀌지 않는다.
 완전 독점 할 수 있다. 
+
 
 ```bash
 python mlfq.py \
