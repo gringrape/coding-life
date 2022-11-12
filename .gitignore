@@ -156,20 +156,30 @@ gradle-app.setting
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
-
-# sbt project
+# bloop and metals
+.bloop
 .bsp
 .metals
-.bloop
-project
+**/project/metals.sbt
+
+# sbt
+project/project/
+project/target/
 target
-.scalafmt.conf
-
-# IntelliJ
-.idea
-
-# gradle
-.gradle
 
 # vscode
 .vscode
+
+# intellij idea
+.idea
+
+# mac
+.DS_Store
+
+# other?
+.history
+.scala_dependencies
+.cache-main
+
+# general
+*.class
