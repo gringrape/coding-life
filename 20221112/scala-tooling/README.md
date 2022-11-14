@@ -90,3 +90,16 @@ sbt test
 ```
 
 ![](https://user-images.githubusercontent.com/53764714/201454811-b5485af1-0dc1-4191-af76-a639ba3107ba.png)
+
+## main 함수에 파라메터 설정
+`src/main/scala/hellosbt/HelloSbt.scala`:
+```scala
+package hellosbt
+
+@main def run(name: String): Unit =
+  val greeting = "Hello, " + name + "!"
+  println(fansi.Color.Blue(greeting))
+
+```
+
+![](https://user-images.githubusercontent.com/53764714/201559463-eafd6f94-7a69-4591-ad88-a4b5edd4f326.png)
