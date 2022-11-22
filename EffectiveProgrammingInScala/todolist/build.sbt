@@ -1,7 +1,7 @@
 course := "effective-scala"
 assignment := "todo"
 
-val DottyVersion = "3.2.0"
+val DottyVersion = "3.1.0"
 val Http4sVersion = "1.0.0-M4"
 val CirceVersion = "0.13.0"
 val LogbackVersion = "1.2.3"
