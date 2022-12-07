@@ -19,3 +19,9 @@
   (abs (- a b)))
 
 (fixed-point cos 1.0) ; 0.739082...
+
+; f(y) = sin(y) + cos(y) 에 대한 fixed-point 찾기.
+
+(fixed-point
+ (lambda (y) (+ (sin y) (cos y)))
+ 1.0) ; 1.25...
