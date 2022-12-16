@@ -133,6 +133,7 @@ dist
 # Python
 env
 .pytest_cache
+__pycache__
 
 # .gradle
 **/build/
