@@ -3,7 +3,6 @@
  */
 package gringrape.mineSweeper;
 
-import java.awt.*;
 import java.util.Scanner;
 
 public class App {
@@ -11,13 +10,15 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         System.out.println("--- 지뢰찾기 게임 ---");
 
-        Board board = new Board();
+        Board board = new Board(5);
 
         while (board.isSearching()) {
+            display(board.toArray());
+
             // Input
-            System.out.println("행 번호를 입력하세요.");
+            System.out.println("지뢰가 있는 행의 번호를 입력하세요. (0~4)");
             int row = scanner.nextInt();
-            System.out.println("열 번호를 입력하세요.");
+            System.out.println("지뢰가 있는 열의 번호를 입력하세요. (0~4)");
             int column = scanner.nextInt();
 
             // Process
@@ -31,5 +32,14 @@ public class App {
         }
 
         System.out.println("게임 클리어!");
+    }
+
+    private static void display(String[][] array) {
+        for (String[] row : array) {
+            for (String element : row) {
+                System.out.print(element + " ");
+            }
+            System.out.println();
+        }
     }
 }

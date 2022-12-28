@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BoardTest {
     @Test
     void selectMineSpotDestroyBoard() {
-        Board board = new Board(); // 생성시에 지뢰 위치 입력.
+        Board board = new Board(5); // 생성시에 지뢰 위치 입력.
 
         assertThat(board.isDestroyed()).isFalse();
 
