@@ -12,10 +12,10 @@ class BoardTest {
     void selectMineSpotDestroyBoard() {
         Board board = new Board(); // 생성시에 지뢰 위치 입력.
 
-        assertThat(board.isDestroyed()).isEqualTo(false);
+        assertThat(board.isDestroyed()).isFalse();
 
         board.select(0, 0);
 
-        assertThat(board.isDestroyed()).isEqualTo(true);
+        assertThat(board.isDestroyed()).isTrue();
     }
 }
