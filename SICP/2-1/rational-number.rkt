@@ -3,7 +3,8 @@
 ; 1. 1/2 를 화면에 표시하기
 
 (define (make-rat a b)
-  (cons a b))
+  (let ((g (gcd a b)))
+    (cons (/ a g) (/ b g))))
 
 (define (numer x)
   (car x))
@@ -20,20 +21,21 @@
 (define one-half (make-rat 1 2))
 
 (print-rat one-half) ; 1/2
+(newline)
 
 ; 2. 분수의 덧셈
 
 (define (add-rat a b)
-  (let ((new-denom (lcm (denom a) (denom b))))
-    (make-rat (+ (* (numer a) (/ new-denom (denom a)))
-                 (* (numer b) (/ new-denom (denom b))))
-              new-denom)))
+  (make-rat (+ (* (numer a) (denom b)) (* (numer b) (denom a)))
+            (* (denom a) (denom b))))
 
 (define one-third (make-rat 1 3))
 (define one-fourth (make-rat 1 4))
 
 (print-rat (add-rat one-half one-third)) ; 5/6
 (print-rat (add-rat one-third one-fourth)) ; 7/12
+(print-rat (add-rat one-fourth one-fourth)) ; 1/2
+(newline)
 
 ; 3. 분수의 곱셈
 
@@ -43,3 +45,4 @@
 
 (print-rat (mul-rat one-half one-third)) ; 1/6
 (print-rat (mul-rat one-third one-fourth)) ; 1/12
+(newline)
