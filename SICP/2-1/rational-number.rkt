@@ -34,3 +34,12 @@
 
 (print-rat (add-rat one-half one-third)) ; 5/6
 (print-rat (add-rat one-third one-fourth)) ; 7/12
+
+; 3. 분수의 곱셈
+
+(define (mul-rat a b)
+  (make-rat (* (numer a) (numer b))
+            (* (denom a) (denom b))))
+
+(print-rat (mul-rat one-half one-third)) ; 1/6
+(print-rat (mul-rat one-third one-fourth)) ; 1/12
