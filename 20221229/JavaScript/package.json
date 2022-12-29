@@ -1,0 +1,14 @@
+{
+  "name": "lru-cache",
+  "type": "module",
+  "scripts": {
+    "watch:test": "NODE_OPTIONS=--experimental-vm-modules jest --watchAll"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.2.4",
+    "eslint": "^8.30.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "jest": "^29.3.1"
+  }
+}
