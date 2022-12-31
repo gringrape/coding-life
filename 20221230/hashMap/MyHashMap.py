@@ -1,19 +1,39 @@
+from Bucket import Bucket
+
+
 class MyHashMap:
     def __init__(self):
-        capacity = 100
-        self.table = [None] * capacity
+        self.capacity = 1000
+        self.table = [None] * self.capacity
+
+    def hash(self, key):
+        return key % self.capacity
 
     def put(self, key: int, value: int) -> int:
-        if len(self.table) <= key:
-            self.table += [None] * (key + 10 - len(self.table))
-        self.table[key] = value
+        bucket = self.get_bucket(key)
+        bucket.push(key, value)
+
+    def get_bucket(self, key):
+        index = self.hash(key)
+        if not self.table[index]:
+            self.table[index] = Bucket()
+
+        return self.table[index]
 
     def get(self, key: int) -> int:
-        if len(self.table) <= key or self.table[key] == None:
+        if not self.has(key):
             return -1
-        return self.table[key]
+        bucket = self.get_bucket(key)
+        if (value := bucket.get_value(key)) == None:
+            return -1
+        return value
 
     def remove(self, key: int) -> None:
-        if len(self.table) <= key:
+        if not self.has(key):
             return
-        self.table[key] = None
+        bucket = self.get_bucket(key)
+        bucket.remove(key)
+
+    def has(self, key):
+        index = self.hash(key)
+        return self.table[index] != None
