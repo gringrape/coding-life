@@ -4,7 +4,7 @@ const context = describe;
 
 function readingsOutsideRange(station, min, max, range) {
   return station.readings
-    .filter((r) => r.temp < min || r.temp > max);
+    .filter((r) => r.temp < range.min || r.temp > range.max);
 }
 
 describe('readingsOutsideRange', () => {
