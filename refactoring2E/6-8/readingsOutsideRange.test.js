@@ -1,6 +1,6 @@
 const context = describe;
 
-function readingsOutsideRange(station, min, max) {
+function readingsOutsideRange(station, min, max, range) {
   return station.readings
     .filter((r) => r.temp < min || r.temp > max);
 }
@@ -28,6 +28,7 @@ describe('readingsOutsideRange', () => {
         station,
         operatingPlan.floorTemperature,
         operatingPlan.ceilTemperature,
+        null,
       )).toHaveLength(2);
     });
   });
