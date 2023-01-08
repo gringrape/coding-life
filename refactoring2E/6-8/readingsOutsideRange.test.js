@@ -1,9 +1,11 @@
+const context = describe;
+
 function readingsOutsideRange(station, min, max) {
   return station.readings
     .filter((r) => r.temp < min || r.temp > max);
 }
 
-test('readingsOutsideRange', () => {
+describe('readingsOutsideRange', () => {
   const station = {
     name: 'ZB1',
     readings: [
@@ -15,5 +17,18 @@ test('readingsOutsideRange', () => {
     ],
   };
 
-  expect(readingsOutsideRange(station, 50, 55)).toHaveLength(2);
+  context('with operating plan', () => {
+    const operatingPlan = {
+      floorTemperature: 50,
+      ceilTemperature: 55,
+    };
+
+    it('returns readings with out-of-range temperature', () => {
+      expect(readingsOutsideRange(
+        station,
+        operatingPlan.floorTemperature,
+        operatingPlan.ceilTemperature,
+      )).toHaveLength(2);
+    });
+  });
 });
