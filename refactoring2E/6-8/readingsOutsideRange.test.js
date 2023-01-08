@@ -1,3 +1,5 @@
+import NumberRange from './NumberRange';
+
 const context = describe;
 
 function readingsOutsideRange(station, min, max, range) {
@@ -23,12 +25,14 @@ describe('readingsOutsideRange', () => {
       ceilTemperature: 55,
     };
 
+    const range = new NumberRange(operatingPlan.floorTemperature, operatingPlan.ceilTemperature);
+
     it('returns readings with out-of-range temperature', () => {
       expect(readingsOutsideRange(
         station,
         operatingPlan.floorTemperature,
         operatingPlan.ceilTemperature,
-        null,
+        range,
       )).toHaveLength(2);
     });
   });
