@@ -1,13 +1,24 @@
 package com.gringrape.shoppingMall.service
 
 import com.gringrape.shoppingMall.domain.Product
+import com.gringrape.shoppingMall.domain.ProductRepository
+import com.gringrape.shoppingMall.exceptions.ProductNotFoundException
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
-class FindProductService {
+@Transactional
+class FindProductService(
+    val productRepository: ProductRepository
+) {
 
     fun list(): List<Product> {
-        TODO("Not yet implemented")
+        return productRepository.findAll()
+    }
+
+    fun findOne(id: Long): Product {
+        return productRepository.findById(id)
+            ?: throw ProductNotFoundException(id)
     }
 
 }

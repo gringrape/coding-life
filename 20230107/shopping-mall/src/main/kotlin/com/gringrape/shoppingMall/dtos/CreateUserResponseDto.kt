@@ -1,7 +1,7 @@
 package com.gringrape.shoppingMall.dtos
 
-data class ProductDto(
+data class CreateUserResponseDto(
     val id: Long,
     val name: String,
-    val price: Long
+    val email: String
 )
