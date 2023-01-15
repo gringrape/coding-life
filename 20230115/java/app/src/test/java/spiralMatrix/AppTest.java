@@ -4,11 +4,51 @@
 package spiralMatrix;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    // 보기 흉하기 보다 보기 좋게, 가장 작게 시작할 수 있는 방법 탐색.
+    // 계획
+    // - 좌표.
+    // - 좌표가 앞으로 나아가는 것.
+
+    private List<Integer> spiralOrder(int[][] ints) {
+        Snail snail = new Snail(ints);
+
+        int M = ints[0].length;
+        int N = ints.length;
+        for (int i = 0; i < M * N; i += 1) {
+            snail.advance();
+        }
+
+        return snail.path();
     }
+
+    @Test
+    void sample() {
+        assertEquals(
+                List.of(1, 2, 3, 6, 9, 8, 7, 4, 5),
+                spiralOrder(new int[][]{
+                        {1, 2, 3},
+                        {4, 5, 6},
+                        {7, 8, 9}
+                })
+        );
+    }
+
+    @Test
+    void sample2() {
+        assertEquals(
+                List.of(1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7),
+                spiralOrder(new int[][]{
+                        {1, 2, 3, 4},
+                        {5, 6, 7, 8},
+                        {9, 10, 11, 12}
+                })
+        );
+    }
+
 }
