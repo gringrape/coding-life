@@ -39,6 +39,19 @@ public class Snail {
         record();
     }
 
+    private boolean isAheadBlocked() {
+        int aheadX = posX + dx;
+        int aheadY = posY + dy;
+        return outOfBound(aheadX, aheadY) || isRecorded(aheadX, aheadY);
+    }
+
+    private boolean outOfBound(int x, int y) {
+        return x < 0 || x >= N || y < 0 || y >= M;
+    }
+
+    private boolean isRecorded(int x, int y) {
+        return record[y][x] == 1;
+    }
 
     private void turn() {
         int temp = dx;
@@ -55,19 +68,5 @@ public class Snail {
         record[posY][posX] = 1;
         int value = map[posY][posX];
         return path.add(value);
-    }
-
-    private boolean isAheadBlocked() {
-        int aheadX = posX + dx;
-        int aheadY = posY + dy;
-        return outOfBound(aheadX, aheadY) || isRecorded(aheadX, aheadY);
-    }
-
-    private boolean isRecorded(int x, int y) {
-        return record[y][x] == 1;
-    }
-
-    private boolean outOfBound(int x, int y) {
-        return x < 0 || x >= N || y < 0 || y >= M;
     }
 }
