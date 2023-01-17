@@ -4,22 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Snail {
-    private final int[][] map;
-    private final int M;
-    private final int N;
     private final List<Integer> path = new ArrayList<>();
     private final int[][] record;
+
+    private final int[][] map;
+    private final int MAP_HEIGHT;
+    private final int MAP_WIDTH;
+
     private int posX = -1;
     private int posY = 0;
+
     private int dx = 1;
     private int dy = 0;
 
     public Snail(int[][] map) {
         this.map = map;
-        M = map.length;
-        N = map[0].length;
+        MAP_HEIGHT = map.length;
+        MAP_WIDTH = map[0].length;
 
-        this.record = new int[M][N];
+        this.record = new int[MAP_HEIGHT][MAP_WIDTH];
     }
 
     public List<Integer> path() {
@@ -42,7 +45,7 @@ public class Snail {
     }
 
     private boolean outOfBound(int x, int y) {
-        return x < 0 || x >= N || y < 0 || y >= M;
+        return x < 0 || x >= MAP_WIDTH || y < 0 || y >= MAP_HEIGHT;
     }
 
     private boolean isRecorded(int x, int y) {
