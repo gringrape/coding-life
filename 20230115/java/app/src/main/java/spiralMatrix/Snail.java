@@ -4,26 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Snail {
-    private final List<Integer> path;
     private final int[][] map;
-    private int posX;
-    private int posY;
-    private int dx;
-    private int dy;
-    private int[][] record;
-    private int M;
-    private int N;
+    private final int M;
+    private final int N;
+    private final List<Integer> path = new ArrayList<>();
+    private final int[][] record;
+    private int posX = -1;
+    private int posY = 0;
+    private int dx = 1;
+    private int dy = 0;
 
     public Snail(int[][] map) {
         this.map = map;
         M = map.length;
         N = map[0].length;
+
         this.record = new int[M][N];
-        path = new ArrayList<>();
-        posX = -1;
-        posY = 0;
-        dx = 1;
-        dy = 0;
     }
 
     public List<Integer> path() {
