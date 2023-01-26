@@ -1,6 +1,7 @@
 import pika
 import sys
 import os
+import time
 
 
 def main():
@@ -13,7 +14,8 @@ def main():
     channel.queue_declare(queue="hello")
 
     def handle_message(ch, methos, properties, body):
-        print("Received: %r" % body)
+        time.sleep(1)
+        print("Done: %r" % body)
 
     channel.basic_consume(
         queue="hello",
