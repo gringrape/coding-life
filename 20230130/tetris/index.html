@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Tetris</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 450px;
+      height: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+   
+    .container > h1 {
+      margin-block: 1em;
+    }
+    
+    canvas {
+      background: #333;
+      display: black;
+      border-radius: 5px;
+      border: 5px solid #bbb;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <h1>Tetris</h1>
+      <canvas></canvas>
+      <script src="./src/index.ts"></script>
+    </div>
+  </body>
+</html>
