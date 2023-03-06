@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "start": "parcel ./target/indigoBuild/index.html"
+  },
+  "dependencies": {
+    "electron": "^23.1.2"
+  },
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  }
+}
