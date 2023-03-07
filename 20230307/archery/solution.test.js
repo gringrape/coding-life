@@ -6,13 +6,11 @@
 // - 어피치(파트너)가 맞힌 과녁 점수 배열
 
 // #. 조건
-
 // ##. 과녁 점수 계산
 // - '과녁'에 '화살'을 더 많이 맞힌 사람이 과녁점수 만큼 점수를 가져감.
 //  ex) 10 점 과녁, 라이언 3, 어피치 2 => 라이언 10점
 // - 과녁에 맞힌 화살 개수가 같을때, 라이언이 우승자이므로 어피치가 점수를 가져감.
 // - 과녁에 맞힌 화살 개수가 0일때, 어느쪽도 점수를 가져가지 않음.
-
 // ##. 최종점수
 // - 최종점수가 같은 경우, 어피치가 우승
 
@@ -44,64 +42,71 @@ test('lastNonzeroIndex', () => {
   expect(lastNonzeroIndex([0, 1, 0, 1, 2, 0])).toBe(4);
 });
 
-function targetScoresGroup({ arrowsCount, enemyScores }) {
-  const shoot = (arrows, index = 0, scores = []) => {
+const TARGET_COUNT = 10;
+
+function hitCountsGroup({ arrowsCount, enemyHitCounts }) {
+  const shoot = (arrows, index = 0, hitCounts = []) => {
     if (arrows < 0) {
       return [];
     }
 
     if (arrows === 0) {
       return [
-        scores.concat(Array(11 - index).fill(0)),
+        hitCounts.concat(Array(TARGET_COUNT - index + 1).fill(0)),
       ];
     }
 
-    if (index === 10) {
-      return [
-        [...scores, arrows],
-      ];
+    if (index === TARGET_COUNT) {
+      return shoot(0, index + 1, [...hitCounts, arrows]);
     }
 
-    const winScore = enemyScores[index] + 1;
+    const winHitCount = enemyHitCounts[index] + 1;
     return [
-      ...shoot(arrows, index + 1, [...scores, 0]),
-      ...shoot(arrows - winScore, index + 1, [...scores, winScore]),
+      ...shoot(arrows, index + 1, [...hitCounts, 0]),
+      ...shoot(arrows - winHitCount, index + 1, [...hitCounts, winHitCount]),
     ];
   };
 
   return shoot(arrowsCount);
 }
 
-test('targetScoresGroup', () => {
-  expect(targetScoresGroup({
+test('hitCountsGroup', () => {
+  expect(hitCountsGroup({
     arrowsCount: 5,
-    enemyScores: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    enemyHitCounts: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
   })).toContainEqual([3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-  expect(targetScoresGroup({
+  expect(hitCountsGroup({
     arrowsCount: 5,
-    enemyScores: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    enemyHitCounts: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
   })).toContainEqual([0, 2, 2, 0, 1, 0, 0, 0, 0, 0, 0]);
 
-  expect(targetScoresGroup({
+  expect(hitCountsGroup({
     arrowsCount: 10,
-    enemyScores: [0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 3],
+    enemyHitCounts: [0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 3],
   })).toContainEqual([1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2]);
 });
 
-function totalScoreDifference(targetScores, enemyTargetScores) {
-  const indicies = [...Array(targetScores.length)].map((_, i) => i);
+function totalScoreDifference(hitCounts, enemyHitCounts) {
+  const targetIndicies = [...Array(hitCounts.length)].map((_, i) => i);
 
-  return indicies.reduce((totalScore, index) => {
-    if (targetScores[index] === 0 && enemyTargetScores[index] === 0) {
-      return totalScore;
+  const scorePairs = targetIndicies.map((i) => {
+    const myHitCount = hitCounts[i];
+    const enemyHitCount = enemyHitCounts[i];
+
+    if (myHitCount === 0 && enemyHitCount === 0) {
+      return [0, 0];
     }
 
-    const score = 10 - index;
-    return targetScores[index] > enemyTargetScores[index]
-      ? totalScore + score
-      : totalScore - score;
-  }, 0);
+    const score = TARGET_COUNT - i;
+    return myHitCount > enemyHitCount
+      ? [score, 0]
+      : [0, score];
+  });
+
+  return scorePairs
+    .map(([myScore, enemyScore]) => myScore - enemyScore)
+    .reduce((a, b) => a + b, 0);
 }
 
 test('scoreDifference', () => {
@@ -119,47 +124,37 @@ function descending(f) {
   return (a, b) => f(b) - f(a);
 }
 
-function solution({ arrowsCount, enemyScores }) {
-  const [bestTargetScores] = targetScoresGroup({ arrowsCount, enemyScores })
-    .filter((i) => totalScoreDifference(i, enemyScores) > 0)
+function solution({ arrowsCount, enemyHitCounts }) {
+  const [bestHitCounts] = hitCountsGroup({ arrowsCount, enemyHitCounts })
+    .filter((i) => totalScoreDifference(i, enemyHitCounts) > 0)
     .sort(descending(lastNonzeroIndex))
-    .sort(descending((x) => totalScoreDifference(x, enemyScores)));
+    .sort(descending((x) => totalScoreDifference(x, enemyHitCounts)));
 
-  return bestTargetScores || [-1];
+  return bestHitCounts || [-1];
 }
 
 test('sample', () => {
   expect(solution({
     arrowsCount: 5,
-    enemyScores: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
+    enemyHitCounts: [2, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0],
   }))
     .toEqual([0, 2, 2, 0, 1, 0, 0, 0, 0, 0, 0]);
 
   expect(solution({
     arrowsCount: 9,
-    enemyScores: [0, 0, 1, 2, 0, 1, 1, 1, 1, 1, 1],
+    enemyHitCounts: [0, 0, 1, 2, 0, 1, 1, 1, 1, 1, 1],
   }))
     .toEqual([1, 1, 2, 0, 1, 2, 2, 0, 0, 0, 0]);
 
   expect(solution({
     arrowsCount: 10,
-    enemyScores: [0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 3],
+    enemyHitCounts: [0, 0, 0, 0, 0, 0, 0, 0, 3, 4, 3],
   }))
     .toEqual([1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 2]);
 
   expect(solution({
     arrowsCount: 1,
-    enemyScores: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    enemyHitCounts: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   }))
     .toEqual([-1]);
 });
-
-// #. Bad.
-// - shot 을 테스트 할 수 없었던게 패착. 가장 큰 패배 요인.
-//  => 디버깅에 엄청난 시간.
-//  => 무지성으로 막 결과를 여러개 프린트해봄. => 이걸 안할 수 있다면
-//  => 이러면 혼이 나간다, 포기하게 된다
-
-// #. Good.
-// - 최소한 기도메타로 코드 수정은 안함.
-// - tricky 한 로직은 별도의 함수로 분리후 테스트함.
