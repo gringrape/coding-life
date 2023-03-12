@@ -24,6 +24,8 @@ bookings[i] = [firsti, lasti, seatsi]
 동일한 정보를 나타내는 `sparse array`로 나타낼 수 있다. 
 `sparse array` 끼리의 연산을 통해서 문제의 해답을 구할 수 있다. 
 
+sparse array 의 각 원소는 이 원소의 값이 해당 index 부터 끝까지 영향을 미친다로 해석. 
+
 ## 2. Course Schedule II
 
 ## 구하는 것
