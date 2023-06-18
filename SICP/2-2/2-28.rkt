@@ -4,13 +4,25 @@
 
 ; fringe
 ; - 구하는 것 - tree 구조에서 leaves 를 모아놓은 list
+
+; append
+; (define (append first second)
+;   (cond ((null? first) second)
+;         (else (cons (car first)
+;                     (append (cdr first) second)))))
+
+(define (append first second)
+  (if (null? first)
+      second
+      (cons (car first)
+            (append (cdr first) second))))
+
 (define (fringe tree)
-  (if (null? tree)
-      nil
-      (let ((head (car tree)) (tail (cdr tree)))
-        (if (pair? head)
-            (append (fringe head) tail)
-            (cons head (fringe tail))))))
+  (cond ((null? tree) nil)
+        ((pair? (car tree)) (append (fringe (car tree))
+                                    (fringe (cdr tree))))
+        (else (cons (car tree)
+                    (fringe (cdr tree))))))
 
 
 ; CASE1. tree 가 leaves 로만 구성되는 경우.
