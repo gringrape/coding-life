@@ -5,40 +5,91 @@
 (define (make-mobile left right)
   (list left right))
 
-; a.
-; a-1. left-branch
+(define (make-branch weight structure)
+  (list weight structure))
+
+; #. a)
+
 (define (left-branch mobile)
   (car mobile))
 
-; a-2. right-branch
 (define (right-branch mobile)
   (car (cdr mobile)))
 
-; a-3. branch-length
 (define (branch-length branch)
   (car branch))
 
-; a-4. branch-structure
 (define (branch-structure branch)
-  (car (cdr branch)))
+  (define submobile (cdr branch))
+  (if (null? (cdr submobile))
+      (car submobile)
+      submobile))
 
-; b.
-; total weight of mobile
-; => select structure
-;  - if leave, + weight
-;  - if pair, + weight of structure
-;  - if null, 0
+; #. b)
 
-; implementation
+; Total weight of mobile
+
+; ##. implementation
+
+(define (submobile? structure)
+  (pair? structure))
+
+(define (branch-weight branch)
+  (define structure (branch-structure branch))
+  (if (submobile? structure)
+      (total-weight structure)
+      structure))
+
 (define (total-weight mobile)
-  (+ (branch-structure (left-branch mobile))
-     (branch-structure (right-branch mobile))))
+  (if (not (pair? mobile)) mobile
+      (+ (branch-weight (left-branch mobile))
+         (branch-weight (right-branch mobile)))))
 
-; TEST
-(define branch-a (list 2 5))
+; ## TEST
 
-(define mobile (make-mobile branch-a branch-a))
+; ### CASE1. no submobile
+(check-equal? (total-weight (make-mobile (make-branch 2 5)
+                                         (make-branch 2 5)))
+              10)
 
-(check-equal? (total-weight mobile) 10)
+; ### CASE2. submobile
+(check-equal? (total-weight (make-mobile (make-branch 2 5)
+                                         (make-branch 3 (make-mobile (make-branch 2 5)
+                                                                     (make-branch 2 5)))))
+              15)
 
-; structure 가 또 다른 mobile 인 경우.
+; #. c)
+
+; ##. 문제 해석
+; - 어떤 mobile 은 좌, 우측에 걸리는 torque 값이 동일할 때 balanced 라고 한다.
+; - 각 torque 의 값은 (길이 * 무게) 로 구한다.
+; - 추가적으로, mobile 의 branch 가 또 다른 mobile 이라면, sub-mobile 들도 balanced 여야 함.
+
+(define (torque branch)
+  (* (branch-length branch)
+     (total-weight (branch-structure branch))))
+
+(define (mobile? mobile)
+  (pair? mobile))
+
+(define (submobile branch)
+  (branch-structure branch))
+
+(define (balanced? mobile)
+  (if (not (mobile? mobile))
+      #t
+      (and (balanced? (submobile (left-branch mobile)))
+           (balanced? (submobile (right-branch mobile)))
+           (= (torque (left-branch mobile))
+              (torque (right-branch mobile))))))
+
+; ###. CASE 1. no submobile
+(check-true (balanced? (make-mobile (make-branch 2 3)
+                                    (make-branch 3 2))))
+
+; ###. CASE 2. submobile
+(check-true (balanced? (make-mobile (make-branch 5 10)
+                                    (make-branch 5
+                                                 (make-mobile (make-branch 4 6)
+                                                              (make-branch 6 4))))))
+
