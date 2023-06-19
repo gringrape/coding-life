@@ -1,0 +1,14 @@
+{
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.mjs -a -b"
+  },
+  "devDependencies": {
+    "eslint": "^8.43.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  }
+}
