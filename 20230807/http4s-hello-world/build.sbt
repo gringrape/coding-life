@@ -20,5 +20,10 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.16" % "test",
 
   // logger
-  "ch.qos.logback" % "logback-classic" % "1.1.3" % Runtime
+  "ch.qos.logback" % "logback-classic" % "1.1.3" % Runtime,
+
+  // circe for json handling
+  "org.http4s" %% "http4s-circe" % http4sVersion,
+  "io.circe" %% "circe-generic" % "0.14.5",
+  "io.circe" %% "circe-literal" % "0.14.5"
 )
