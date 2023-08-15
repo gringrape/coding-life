@@ -3,28 +3,73 @@
 (#%require rackunit)
 
 
-; 목표 - complete the procedure of generating set of all subsets of a set.
-; 잘 모르는 것 - 결과물을 테스트하는 법? => 배열 비교를 통해 테스트 할 수 있다.
+; sort
 
-(define (subsets s)
-  (if (null? s)
+; - take smaller, larger
+(define (take-smaller pivot l)
+  (cond ((null? l) nil)
+        ((<= pivot (car l)) (take-smaller pivot (cdr l)))
+        (else (append (list (car l)) (take-smaller pivot (cdr l))))))
+
+(define (take-larger pivot l)
+  (cond ((null? l) nil)
+        ((>= pivot (car l)) (take-larger pivot (cdr l)))
+        (else (append (list (car l)) (take-larger pivot (cdr l))))))
+
+
+(check-equal? (take-smaller 2 (list 2 1 3))
+              (list 1))
+
+(check-equal? (take-smaller 3 (list 1 2 3))
+              (list 1 2))
+
+(check-equal? (take-smaller 1 (list 1 2))
+              nil)
+
+(check-equal? (take-larger 1 (list 2 1))
+              (list 2))
+
+(check-equal? (take-larger 2 (list 3 1 2))
+              (list 3))
+
+; - quick sort
+(define (quick-sort l)
+  (if (or (= (length l) 1) (null? l)) l
+      (append (quick-sort (take-smaller (car l) l))
+              (list (car l))
+              (quick-sort (take-larger (car l) l)))))
+
+
+(define (sort list)
+  (quick-sort list))
+
+(check-equal? (sort (list 1))
+              (list 1))
+
+(check-equal? (sort nil) nil)
+
+(check-equal? (quick-sort (list 2 1 3)) (list 1 2 3))
+(check-equal? (quick-sort (list 3 1 2)) (list 1 2 3))
+(check-equal? (quick-sort (list 3 1 2 5)) (list 1 2 3 5))
+
+(define (subsets set)
+  (if (null? set)
       (list nil)
-      (let ((rest (subsets (cdr s))))
-        (append rest (map (lambda (set) (cons (car s) set)) rest)))))
+      (append (subsets (cdr set))
+              (map (lambda (s) (sort (append (list (car set)) s)))
+                   (subsets (cdr set)))
+              )))
 
 ; TEST
 
-; Case 1) Empty Set
-(check-equal? (subsets (list ))
-              (list (list )))
+; empty list
+(check-equal? (subsets nil)
+              (list nil))
 
-; Case 2) One element
+; one element
 (check-equal? (subsets (list 1))
-              (list (list ) (list 1)))
+              (list nil (list 1)))
 
-; Case 3) Multiple elements
+; two elements
 (check-equal? (subsets (list 1 2))
-              (list (list ) (list 2) (list 1) (list 1 2)))
-
-; 배운 것
-; - 재귀적 문제의 해결 팁 => 스스로가 이미 해결된 과제라고 가정함. => 가정했을때 전체 문제가 어떻게 쪼개지는지?
+              (list nil (list 2) (list 1) (list 1 2)))
