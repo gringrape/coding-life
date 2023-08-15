@@ -49,7 +49,7 @@ object StartScene extends Scene[MyStartupData, GameModel, ViewModel] {
   ): GlobalEvent => Outcome[SceneModel] =
     case KeyboardEvent.KeyDown(Key.ENTER) =>
       Outcome(model)
-        .addGlobalEvents(SceneEvent.JumpTo(SceneName("end")))
+        .addGlobalEvents(SceneEvent.JumpTo(SceneName("game")))
     case _ => Outcome(model)
 
   override def updateViewModel(

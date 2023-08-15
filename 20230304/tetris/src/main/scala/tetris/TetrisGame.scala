@@ -54,6 +54,7 @@ import tetris.models.ViewModel
 import tetris.models.GameModel
 
 import tetris.scenes.StartScene
+import tetris.scenes.GameScene
 import tetris.scenes.EndScene
 
 final case class MyStartupData(maxParticles: Int)
@@ -92,6 +93,7 @@ object TetrisGame extends IndigoGame[Unit, MyStartupData, GameModel, ViewModel]:
       bootData: Unit
   ): NonEmptyList[Scene[MyStartupData, GameModel, ViewModel]] = NonEmptyList(
     StartScene,
+    GameScene,
     EndScene
   )
 

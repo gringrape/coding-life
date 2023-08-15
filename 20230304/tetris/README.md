@@ -85,7 +85,17 @@ parcel.js - https://parceljs.org/getting-started/webapp/
 press `r` key
 
 ## 해야할 일
-- [ ] Game Scene 만들기
-- [ ] Block Entity
-  - [ ] 화면에 표시
+- [x] Game Scene 만들기
+- [x] Block Entity
+  - [x] 화면에 표시
   - [ ] 낙하 
+
+### 낙하기능 구체화
+화면에 네모블럭이 나타나고 시간이 감에 따라 위치가 아래로 이동한다(낙하한다)
+
+### 가변변수 인자로 전달
+
+```scala
+val myList = List("a", "b", "c")
+processList(myList: _*)
+```
