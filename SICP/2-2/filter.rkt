@@ -19,3 +19,5 @@ display
 
 (check-equal? (filter even? (list 1 2 3 4 5))
               (list 2 4))
+
+(#%provide filter)
