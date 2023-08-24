@@ -30,3 +30,5 @@
                              (list 4 5 6)
                              (list 10 11 12)))
               (list (list 2 3) (list 5 6) (list 11 12)))
+
+(#%provide accumulate-n)
