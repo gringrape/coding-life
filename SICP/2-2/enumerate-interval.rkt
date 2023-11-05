@@ -21,3 +21,5 @@
 
 ; - CTRL+Z 를 봉인하자.
 ; - 잘못했을때 처음 부터 다시 만들게 되니, 자연스렙게 차분해졌다.
+
+(#%provide enumerate-interval)
