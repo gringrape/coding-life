@@ -13,6 +13,7 @@ python-dotenv = "*"
 tiktoken = "*"
 chroma = "*"
 chromadb = "*"
+pydantic = "*"
 
 [dev-packages]
 
