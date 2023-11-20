@@ -184,3 +184,6 @@ target
 
 # general
 *.class
+
+# Python virtual environment
+.venv
