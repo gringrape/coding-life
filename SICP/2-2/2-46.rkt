@@ -56,3 +56,5 @@
 
 (check-equal? (scale-vect 3 (make-vect 1 2))
               (make-vect 3 6))
+
+(#%provide make-vect)
