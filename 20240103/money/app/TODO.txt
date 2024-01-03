@@ -1,0 +1,4 @@
+할 일
+- 5 dollar * 2 = 10 dollar
+- 10 CHF + 5 dollar = 10 dollar
+- amount private
