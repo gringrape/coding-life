@@ -1,4 +1,8 @@
 할 일
-- 5 dollar * 2 = 10 dollar
 - 10 CHF + 5 dollar = 10 dollar
 - amount private
+- amount 소수점?
+
+- 5 dollar * 2 = 10 dollar => o.k.
+- Dollar 부작용 -> o.k.
+- 값객체, equals -> o.k.
