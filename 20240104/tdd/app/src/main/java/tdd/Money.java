@@ -1,6 +1,6 @@
 package tdd;
 
-public abstract class Money {
+public class Money {
     protected String currency;
 
     protected int amount;
@@ -25,7 +25,9 @@ public abstract class Money {
                 && currency().equals(money.currency());
     }
 
-    abstract public Money times(int multiplier);
+    public Money times(int multiplier) {
+        return new Money(amount * multiplier, currency);
+    }
 
     String currency() {
         return currency;

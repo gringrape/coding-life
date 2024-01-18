@@ -1,10 +1,15 @@
 TODO
 
+# Doing
 - 하위 클래스 제거
+
+# Todos
 - 10 CHF + 5 dollar = 10 dollar
 - 소수점을 지원하는 amount
 - Dollar - "USD" 표현 중복? => 하위클래스를 제거하는 과정에서 사라질듯.
 
+# Done
+- 공용 times -> o.k. 
 - 통화? -> o.k.
 - 공통 생성자 -> o.k.
 - 테스트에서 하위 클래스 참조 제거 -> o.k.
