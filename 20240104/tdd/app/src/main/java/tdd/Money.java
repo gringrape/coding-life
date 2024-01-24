@@ -1,6 +1,7 @@
 package tdd;
 
-public class Money {
+
+public class Money implements Expression {
     protected String currency;
 
     protected int amount;
@@ -31,5 +32,20 @@ public class Money {
 
     String currency() {
         return currency;
+    }
+
+    public Expression plus(Money addend) {
+        return new Sum(this, addend);
+    }
+
+    @Override
+    public String toString() {
+        return amount + " " + currency();
+    }
+
+    @Override
+    public Money reduce(Bank bank, String to) {
+        int rate = bank.rate(currency, to);
+        return new Money(amount / rate, to);
     }
 }

@@ -8,6 +8,12 @@ TODO
 - Dollar - "USD" 표현 중복? => 하위클래스를 제거하는 과정에서 사라질듯.
 
 # Done
+- 2 CHF -> 1 dollar 은행에서 바꿔오자.
+- 5 dollar + 5 dollar = 10 dollar
+- Money reduce
+- 객체 표현 toString
+- 다중 통화를 처리하는 Expression, Money 와 유사하게 거동.
+- Reduce Sum
 - 하위 클래스 제거 -> o.k.
 - 공용 times -> o.k.
 - 통화? -> o.k.
