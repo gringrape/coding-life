@@ -5,22 +5,17 @@ package tdd;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.stream.DoubleStream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class MoneyTest {
     @Test
-    void testDollarMultiplication() {
-        Money five = Money.dollar(5);
+    void testMultiplication() {
+        Expression five = Money.dollar(5);
         assertEquals(Money.dollar(10), five.times(2));
         assertEquals(Money.dollar(15), five.times(3));
-    }
-
-    @Test
-    void testFrancMultiplication() {
-        Money five = Money.franc(5);
-        assertEquals(Money.franc(10), five.times(2));
-        assertEquals(Money.franc(15), five.times(3));
     }
 
     @Test
@@ -86,4 +81,14 @@ class MoneyTest {
         assertEquals(Money.dollar(1), reduced);
     }
 
+    @Test
+    void testDifferentCurrencyAddition() {
+        Expression fiveBucks = Money.dollar(5);
+        Expression tenFrancs = Money.franc(10);
+        Expression sum = tenFrancs.plus(fiveBucks);
+        Bank bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+        Money reduced = bank.reduce(sum, "USD");
+        assertEquals(Money.dollar(10), reduced);
+    }
 }

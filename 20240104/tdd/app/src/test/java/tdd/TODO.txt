@@ -2,8 +2,8 @@ TODO
 
 # Doing
 
+
 # Todos
-- 10 CHF + 5 dollar = 10 dollar
 - 소수점을 지원하는 amount
 - Dollar - "USD" 표현 중복? => 하위클래스를 제거하는 과정에서 사라질듯.
 
@@ -25,3 +25,9 @@ TODO
 - equals -> o.k.
 - 부작용 -> o.k.
 - private amount -> o.k.
+- 10 CHF + 5 dollar = 10 dollar
+- 추상화 - Money, Sum => Expression
+    - Money => Expression
+    - Sum => Expression
+        - reduce의 결과가 Money
+        - 나머지 연산은 Expression 을 사용.
