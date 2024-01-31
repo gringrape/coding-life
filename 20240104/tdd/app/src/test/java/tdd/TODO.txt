@@ -1,7 +1,7 @@
 TODO
 
 # Doing
-
+- 5 dollar + 5 dollar => 은행에 가야함?
 
 # Todos
 - 소수점을 지원하는 amount
@@ -31,3 +31,6 @@ TODO
     - Sum => Expression
         - reduce의 결과가 Money
         - 나머지 연산은 Expression 을 사용.
+- Sum, plus => (5 dollar + 10 franc) + 5 dollar = 15 dollar
+- Expression <= Sum, Money
+    - Sum, times => (5 dollar + 10 franc) * 2 = 20 dollar

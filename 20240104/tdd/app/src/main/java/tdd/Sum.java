@@ -4,6 +4,7 @@ public class Sum implements Expression {
     public Expression augend;
     public Expression addend;
 
+    // Pattern => 자식들에 동일한 연산을 해줌. => composite pattern
     public Sum(Expression augend, Expression addend) {
         this.augend = augend;
         this.addend = addend;
@@ -15,11 +16,14 @@ public class Sum implements Expression {
 
     @Override
     public Expression plus(Expression addend) {
-        return null;
+        return new Sum(this, addend);
     }
 
     @Override
-    public Money times(int multiplier) {
-        return null;
+    public Expression times(int multiplier) {
+        return new Sum(
+                augend.times(multiplier),
+                addend.times(multiplier)
+        );
     }
 }

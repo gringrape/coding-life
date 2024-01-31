@@ -35,7 +35,15 @@ public class Money implements Expression {
     }
 
     public Expression plus(Expression addend) {
-        return new Sum(this, addend);
+        return switch (addend) {
+            case Money m -> {
+                if (currency().equals(m.currency())) {
+                    yield new Money(amount + m.amount, currency());
+                }
+                yield new Sum(this, addend);
+            }
+            default          -> new Sum(this, addend);
+        };
     }
 
     @Override

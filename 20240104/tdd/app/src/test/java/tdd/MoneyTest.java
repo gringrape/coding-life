@@ -3,19 +3,29 @@
  */
 package tdd;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.DoubleStream;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 class MoneyTest {
+    private Expression fiveBucks;
+    private Expression tenFrancs;
+    private Bank bank;
+
+    @BeforeEach
+    void setup() {
+        fiveBucks = Money.dollar(5);
+        tenFrancs = Money.franc(10);
+        bank = new Bank();
+        bank.addRate("CHF", "USD", 2);
+    }
+
     @Test
     void testMultiplication() {
-        Expression five = Money.dollar(5);
-        assertEquals(Money.dollar(10), five.times(2));
-        assertEquals(Money.dollar(15), five.times(3));
+        assertEquals(Money.dollar(10), fiveBucks.times(2));
+        assertEquals(Money.dollar(15), fiveBucks.times(3));
     }
 
     @Test
@@ -33,25 +43,13 @@ class MoneyTest {
 
     @Test
     void testSimpleAddition() {
-        Money five = Money.dollar(5);
-        Expression sum = five.plus(five);
-        Bank bank = new Bank();
+        Expression sum = fiveBucks.plus(fiveBucks);
         Money reduced = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(10), reduced);
     }
 
     @Test
-    void testPlusReturnsSum() {
-        Money five = Money.dollar(5);
-        Expression expression = five.plus(five);
-        Sum sum = (Sum) expression;
-        assertEquals(Money.dollar(5), sum.augend);
-        assertEquals(Money.dollar(5), sum.addend);
-    }
-
-    @Test
     void testReduceSum() {
-        Bank bank = new Bank();
         Sum sum = new Sum(
                 Money.dollar(3), Money.dollar(4)
         );
@@ -61,34 +59,49 @@ class MoneyTest {
 
     @Test
     void testReduceMoney() {
-        Bank bank = new Bank();
         Money reduced = bank.reduce(Money.dollar(1), "USD"); // USD -> USD
         assertEquals(Money.dollar(1), reduced);
     }
 
     @Test
     void testExchange() {
-        Bank bank = new Bank();
-        bank.addRate("CHF", "USD", 2);
         Money reduced = bank.reduce(Money.franc(2), "USD");
         assertEquals(Money.dollar(1), reduced);
     }
 
     @Test
     void testIdentityExchange() {
-        Bank bank = new Bank();
         Money reduced = bank.reduce(Money.dollar(1), "USD");
         assertEquals(Money.dollar(1), reduced);
     }
 
     @Test
     void testDifferentCurrencyAddition() {
-        Expression fiveBucks = Money.dollar(5);
-        Expression tenFrancs = Money.franc(10);
         Expression sum = tenFrancs.plus(fiveBucks);
-        Bank bank = new Bank();
-        bank.addRate("CHF", "USD", 2);
         Money reduced = bank.reduce(sum, "USD");
         assertEquals(Money.dollar(10), reduced);
+    }
+
+    // working memory => flush
+    // red => working memory 과부하 => 짜증남, 현실부정
+
+    @Test
+    void testSumPlus() {
+        Expression sum = new Sum(fiveBucks, tenFrancs).plus(fiveBucks);
+        Money reduced = bank.reduce(sum, "USD");
+        assertEquals(Money.dollar(15), reduced);
+    }
+
+    @Test
+    void testSumTimes() {
+        Expression product = new Sum(fiveBucks, tenFrancs).times(2);
+        Money reduced = bank.reduce(product, "USD");
+        assertEquals(Money.dollar(20), reduced);
+    }
+
+    @Test
+    void testPlusSameCurrency() {
+        Expression sum = fiveBucks.plus(fiveBucks);
+        assertTrue(sum instanceof Money);
     }
 }
