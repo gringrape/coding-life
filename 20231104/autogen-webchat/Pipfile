@@ -8,7 +8,7 @@ start = "python3 ./main.py"
 
 [packages]
 docker = "*"
-pyautogen = "*"
+ag2 = "*"
 pymemgpt = "*"
 
 [dev-packages]

@@ -930,7 +930,7 @@
             "markers": "python_version >= '3.8'",
             "version": "==14.0.0"
         },
-        "pyautogen": {
+        "ag2": {
             "hashes": [
                 "sha256:1e9334cc7a69e73907154ff7c9c323f13aab7b70bdc8cce836be7ea92a127fff",
                 "sha256:4f12b248af5350958a6073952123a802334b3d3dcd700353cdf25a8aacac4298"
